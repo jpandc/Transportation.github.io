@@ -1,0 +1,522 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>心測旅程</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-a: #0D0D0D;
+      --bg-b: #6F8C07;
+      --card: #0d0d0dbd;
+      --ink: #ACD90B;
+      --muted: #6F8C07;
+      --accent: #6F8C07;
+      --accent-2: #2f7d6e;
+      --ring: rgba(37, 48, 71, 0.14);
+      --ok: #F22294;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(230, 111, 81, 0.16), transparent 25%),
+        radial-gradient(circle at 85% 25%, rgba(47, 125, 110, 0.14), transparent 28%),
+        radial-gradient(circle at 70% 80%, rgba(53, 118, 201, 0.12), transparent 34%),
+        linear-gradient(135deg, var(--bg-a), var(--bg-b));
+      display: grid;
+      place-items: center;
+      padding: 24px 14px;
+    }
+
+    .shell {
+      width: min(760px, 100%);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 24px;
+      box-shadow: 0 22px 50px rgba(42, 48, 68, 0.14);
+      padding: clamp(18px, 3vw, 32px);
+      background: var(--card);
+      backdrop-filter: blur(12px);
+      animation: rise 580ms ease both;
+    }
+
+    .brand {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 0.02em;
+      color: #F22294;
+      line-height: 1;
+    }
+
+    .lead {
+      margin: 8px 0 16px;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .meter {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #454545;
+      overflow: hidden;
+      border: 1px solid #6e6e6e;
+    }
+
+    .meter>i {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #F22294);
+      transition: width 320ms ease;
+    }
+
+    .step {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .stage {
+      margin-top: 16px;
+      min-height: 290px;
+      animation: fadeIn 280ms ease;
+    }
+
+    .q {
+      font-size: clamp(1.1rem, 2.8vw, 1.48rem);
+      font-weight: 700;
+      margin: 0 0 16px;
+      line-height: 1.45;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      border: 1px solid var(--ring);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #111111e6;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+      text-align: left;
+      font-size: 0.98rem;
+      color: var(--ink);
+    }
+
+    .option:hover {
+      transform: translateY(-1px);
+      border-color: rgba(230, 111, 81, 0.55);
+      box-shadow: 0 8px 24px rgba(42, 48, 68, 0.08);
+    }
+
+    .option.active {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(47, 125, 110, 0.18);
+      background: #3a3a3a;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .ghost {
+      background: #eef1f5;
+      color: #445068;
+    }
+
+    .ghost:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .main {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .main:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .result-title {
+      margin: 4px 0 8px;
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      color: var(--ok);
+    }
+
+    .result-desc {
+      margin: 0;
+      line-height: 1.7;
+      color: #ACD90B;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #6F8C07;
+      color: #ffffff;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        border-radius: 18px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell" role="application" aria-label="心理測驗">
+    <h1 class="brand">焦通工具</h1>
+    <p class="lead">你一早醒來發現已經十點半了，要遲到了。6 題情境測驗，依顏色分佈判定你的心理型態。</p>
+
+    <div class="meter" aria-hidden="true"><i id="bar"></i></div>
+    <div class="step" id="step">第 1 / 6 題</div>
+
+    <section class="stage" id="stage"></section>
+
+    <div class="actions" id="actions">
+      <button class="ghost" id="prevBtn" type="button">上一題</button>
+      <button class="main" id="nextBtn" type="button" disabled>下一題</button>
+    </div>
+  </main>
+
+  <script>
+    const lines = ["成癮線", "比較線", "外貌線", "社交線", "飛天熱狗線"];
+    const colorNames = ["藍色", "洋紅", "綠色", "橘色", "紅色"];
+    const lineToColor = {
+      "成癮線": "藍色",
+      "比較線": "洋紅",
+      "外貌線": "綠色",
+      "社交線": "橘色",
+      "飛天熱狗線": "紅色"
+    };
+    const rules = {
+      extremeAtLeast: 5,
+      mixedPatterns: [
+        [2, 1, 1, 1, 1],
+        [2, 2, 2, 0, 0]
+      ],
+      tiePattern: [3, 3, 0, 0, 0],
+      labels: {
+        extreme: "第一類：極端型",
+        mixed: "第二類：均勻混合型",
+        tie: "第三類：平手型",
+        dominant: "第四類：主導型",
+        unknown: "未分類"
+      },
+      endings: {
+        "藍色極端": "你衝進了無限捲動走廊，時間在指尖滑過。你決定先停下 10 秒，重新拿回節奏控制權。",
+        "洋紅極端": "你走進排行榜競技場，所有人都在比較。你深呼吸，轉身把目標改成和昨天的自己比。",
+        "綠色極端": "你來到鏡廳舞台，燈光全打在外表上。你放下完美標準，選擇舒服地做自己。",
+        "橘色極端": "你站在人群中央，不停確認每個人的反應。最後你找到真正在乎你的人，安心落地。",
+        "紅色極端": "你被飛天熱狗載進荒誕宇宙，笑到停不下來。笑完之後，你也記得把生活拉回日常軌道。",
+        "均勻混合型": "你像調色盤一樣平衡，能在不同狀態間切換。這份彈性是你的超能力。",
+        "主導": "你目前有明確主軸，行動感很強。只要留一點餘裕，你會走得更穩。",
+        "平手": "兩股力量正在拉扯，也代表你有雙重潛能。找到兩者都能呼吸的節奏，就是你的破關點。",
+        "規則外分佈": "你走出了一條少見路線，這代表你正在變化中。先觀察、再定義，就是你的新結局起點。"
+      }
+    };
+
+    const questions = [
+      // {
+      //   text: "??????",
+      //   options: [
+      //     { label: "?????"}
+      //   ]
+      // },
+      {
+        text: "第一題：這個你期待已久卻因為睡過頭而出差錯的活動會是什麼呢？",
+        options: [
+          { label: "為了剪出爆火影片而報名的數位影音剪輯課程", line: "成癮線" },
+          { label: "期中考，你為了今天準備了很久", line: "比較線" },
+          { label: "一場畢業照拍攝，幾個月後將登上校園紀念冊上", line: "外貌線" },
+          { label: "新朋友們特地邀請你來參加的聚會", line: "社交線" },
+          { label: "買最新上市的飛天熱狗", line: "飛天熱狗線" }
+        ]
+      },
+      {
+        text: "第二題：你打算怎麼去？",
+        options: [
+          { label: "高鐵，雖然距離不遠，但很快，在上面也有充裕的時間使用手機", line: "成癮線" },
+          { label: "私人飛機，是有點大張旗鼓，但排場要有", line: "比較線" },
+          { label: "方便補妝和自拍的計程車，搭什麼都不重要，重要的是你今天必須好看", line: "外貌線" },
+          { label: "自己開車，或許聚會結束後還能載朋友們回家", line: "社交線" },
+          { label: "騎飛天熱狗去", line: "飛天熱狗線" }
+        ]
+      },
+      {
+        text: "第三題：突然有幾隻小動物闖了進來，你覺得是什麼動物？",
+        options: [
+          { label: "不停往嘴巴塞松果的松鼠，不知道什麼時能吃完", line: "成癮線" },
+          { label: "幾隻狼闖了進來，彼此互相觀察、好像在比較誰更強", line: "比較線" },
+          { label: "一隻時尚的變色龍，看起來最近流行紅色", line: "外貌線" },
+          { label: "可愛的小狗在猛搖尾巴，想吸引你的注意", line: "社交線" },
+          { label: "一根飛天熱狗，身上沾滿番茄醬", line: "飛天熱狗線" }
+        ]
+      },
+      {
+        text: "第四題：一直有件令你煩心的事，你覺得是什麼？",
+        options: [
+          { label: "經過一塊訊號不好的區域，你覺得很煩，頁面不停刷新卻沒辦法顯示內容", line: "成癮線" },
+          { label: "你的朋友不斷和你提及他假期去了多少國家玩", line: "比較線" },
+          { label: "下了一場大雨，你抱怨這毀了你的妝和服裝", line: "外貌線" },
+          { label: "朋友還沒回你的訊息，你懷疑是不是說錯話了", line: "社交線" },
+          { label: "飛天熱狗比你想像中的還難吃（被碰瓷）", line: "飛天熱狗線" }
+        ]
+      },
+      {
+        text: "第五題：終於到達目的地了，你發現時間還很充裕，這時候你會選擇做什麼來打發時間？",
+        options: [
+          { label: "你不自覺打開手機 app 又關掉，不斷重複", line: "成癮線" },
+          { label: "吃著剛剛點的雞塊，但你很介意為什麼這份比較小", line: "比較線" },
+          { label: "你一直撥弄劉海和檢查妝容，絕對不能出差錯", line: "外貌線" },
+          { label: "一次次刷新通知欄，想著新發的照片有沒有人點讚", line: "社交線" },
+          { label: "追著飛天熱狗跑", line: "飛天熱狗線" }
+        ]
+      },
+      {
+        text: "第六題：活動結束後，你在回家的路上遇見了某人，你認為他是？",
+        options: [
+          { label: "一個逃出鐘錶店的小偷", line: "成癮線" },
+          { label: "學校裡受歡迎的人生勝利組", line: "比較線" },
+          { label: "正在幫路人街頭攝影的攝影師", line: "外貌線" },
+          { label: "一群聊八卦的同學", line: "社交線" },
+          { label: "一個穿著飛天熱狗服裝的猛漢", line: "飛天熱狗線" }
+        ]
+      }
+    ];
+
+    const stage = document.getElementById("stage");
+    const step = document.getElementById("step");
+    const bar = document.getElementById("bar");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let current = 0;
+    const answers = Array(questions.length).fill(null);
+
+    function updateMeter() {
+      const pct = (Math.min(current + 1, questions.length) / questions.length) * 100;
+      bar.style.width = `${pct}%`;
+      step.textContent = `第 ${Math.min(current + 1, questions.length)} / ${questions.length} 題`;
+    }
+
+    function renderQuestion() {
+      updateMeter();
+      const q = questions[current];
+      stage.innerHTML = `
+        <h2 class="q">${q.text}</h2>
+        <div class="options">
+          ${q.options.map((opt, idx) => `
+            <button class="option ${answers[current] === idx ? "active" : ""}" type="button" data-idx="${idx}">
+              ${opt.label}
+            </button>
+          `).join("")}
+        </div>
+      `;
+
+      prevBtn.disabled = current === 0;
+      nextBtn.textContent = current === questions.length - 1 ? "看結果" : "下一題";
+      nextBtn.disabled = answers[current] === null;
+
+      stage.querySelectorAll(".option").forEach((el) => {
+        el.addEventListener("click", () => {
+          answers[current] = Number(el.dataset.idx);
+          renderQuestion();
+        });
+      });
+    }
+
+    function buildLineCount() {
+      const count = Object.fromEntries(lines.map((line) => [line, 0]));
+      answers.forEach((pick, i) => {
+        const line = questions[i].options[pick].line;
+        count[line] += 1;
+      });
+      return count;
+    }
+
+    function toColorCount(lineCount) {
+      return colorNames.map((color) => {
+        const line = Object.keys(lineToColor).find((key) => lineToColor[key] === color);
+        return lineCount[line];
+      });
+    }
+
+    function isPattern(values, pattern) {
+      const sorted = values.slice().sort((a, b) => b - a);
+      return sorted.every((v, i) => v === pattern[i]);
+    }
+
+    function classifyResult(lineCount) {
+      const colorCount = toColorCount(lineCount);
+      const maxCount = Math.max(...colorCount);
+
+      if (maxCount >= rules.extremeAtLeast) {
+        const idx = colorCount.indexOf(maxCount);
+        return {
+          category: rules.labels.extreme,
+          title: `${colorNames[idx]}極端`
+        };
+      }
+
+      if (rules.mixedPatterns.some((pattern) => isPattern(colorCount, pattern))) {
+        return {
+          category: rules.labels.mixed,
+          title: "均勻混合型"
+        };
+      }
+
+      if (isPattern(colorCount, rules.tiePattern)) {
+        const tied = colorNames.filter((name, i) => colorCount[i] === 3);
+        return {
+          category: rules.labels.tie,
+          title: `${tied[0]}＋${tied[1]}`
+        };
+      }
+
+      const maxHits = colorCount.filter((n) => n === maxCount).length;
+      if (maxHits === 1) {
+        const idx = colorCount.indexOf(maxCount);
+        return {
+          category: rules.labels.dominant,
+          title: `${colorNames[idx]}主導`
+        };
+      }
+
+      return {
+        category: rules.labels.unknown,
+        title: "規則外分佈"
+      };
+    }
+
+    function renderResult() {
+      const lineCount = buildLineCount();
+      const result = classifyResult(lineCount);
+      const ending =
+        rules.endings[result.title] ||
+        (result.category === rules.labels.dominant ? rules.endings["主導"] :
+          result.category === rules.labels.tie ? rules.endings["平手"] :
+            rules.endings["規則外分佈"]);
+      const colorDetail = colorNames.map((color) => {
+        const line = Object.keys(lineToColor).find((key) => lineToColor[key] === color);
+        return `${color} ${lineCount[line]}`;
+      }).join(" ・ ");
+      const lineDetail = lines.map((line) => `${line} ${lineCount[line]}`).join(" ・ ");
+
+      step.textContent = "測驗完成";
+      bar.style.width = "100%";
+      prevBtn.style.display = "none";
+      nextBtn.textContent = "重新測驗";
+      nextBtn.disabled = false;
+
+      stage.innerHTML = `
+        <p class="pill">${result.category}</p>
+        <h2 class="result-title">${result.title}</h2>
+        <p class="result-desc">${ending}</p>
+        <p class="result-desc">顏色計數：${colorDetail}</p>
+        <p class="result-desc">線索計數：${lineDetail}</p>
+      `;
+
+      nextBtn.onclick = () => {
+        current = 0;
+        for (let i = 0; i < answers.length; i++) answers[i] = null;
+        prevBtn.style.display = "inline-block";
+        nextBtn.onclick = null;
+        renderQuestion();
+      };
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (current > 0) {
+        current -= 1;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (answers[current] === null) return;
+      if (current < questions.length - 1) {
+        current += 1;
+        renderQuestion();
+      } else {
+        renderResult();
+      }
+    });
+
+    renderQuestion();
+  </script>
+</body>
+
+</html>
