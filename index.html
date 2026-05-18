@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-Hant">
 
 <head>
@@ -12,15 +12,15 @@
     rel="stylesheet">
   <style>
     :root {
-      --bg-a: #0D0D0D;
-      --bg-b: #6F8C07;
-      --card: #0d0d0dbd;
-      --ink: #ACD90B;
-      --muted: #6F8C07;
-      --accent: #6F8C07;
+      --bg-a: #005BAC;
+      --bg-b: #F6A623;
+      --card: #bebcb4bd;
+      --ink: #F6A623;
+      --muted: #005BAC;
+      --accent: #8C4B3B;
       --accent-2: #2f7d6e;
-      --ring: rgba(37, 48, 71, 0.14);
-      --ok: #F22294;
+      --ring: #B8BDC324;
+      --ok: #D8C7A1;
     }
 
     * {
@@ -44,7 +44,7 @@
 
     .shell {
       width: min(760px, 100%);
-      border: 1px solid rgba(255, 255, 255, 0.65);
+      border: 1px solid #3A3A3Aa6;
       border-radius: 24px;
       box-shadow: 0 22px 50px rgba(42, 48, 68, 0.14);
       padding: clamp(18px, 3vw, 32px);
@@ -58,7 +58,7 @@
       font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
       font-size: clamp(2rem, 5vw, 3rem);
       letter-spacing: 0.02em;
-      color: #F22294;
+      color: var(--ok);
       line-height: 1;
     }
 
@@ -72,7 +72,7 @@
       width: 100%;
       height: 12px;
       border-radius: 999px;
-      background: #454545;
+      background: #B8BDC3;
       overflow: hidden;
       border: 1px solid #6e6e6e;
     }
@@ -82,7 +82,7 @@
       width: 0%;
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--accent), #F22294);
+      background: linear-gradient(90deg, var(--accent), var(--ok));
       transition: width 320ms ease;
     }
 
@@ -114,7 +114,7 @@
       border: 1px solid var(--ring);
       border-radius: 14px;
       padding: 12px 14px;
-      background: #111111e6;
+      background: #005BACe6;
       cursor: pointer;
       transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
       text-align: left;
@@ -131,7 +131,7 @@
     .option.active {
       border-color: var(--accent-2);
       box-shadow: 0 0 0 3px rgba(47, 125, 110, 0.18);
-      background: #3a3a3a;
+      background: #4F7C59;
     }
 
     .actions {
@@ -520,3 +520,4 @@
 </body>
 
 </html>
+s
