@@ -287,6 +287,34 @@
         "規則外分佈": "你走出了一條少見路線，這代表你正在變化中。先觀察、再定義，就是你的新結局起點。"
       }
     };
+    const lineEndingMap = {
+      "成癮線": "成癮線",
+      "比較線": "比較線",
+      "外貌線": "外貌線",
+      "社交線": "社交線",
+      "飛天熱狗線": "飛天熱狗線",
+      "成癮線+比較線": "低迷循環線",
+      "成癮線+外貌線": "虛擬面具線",
+      "成癮線+社交線": "制約快感線",
+      "成癮線+飛天熱狗線": "迷因爆米花線",
+      "比較線+外貌線": "視覺競賽線",
+      "比較線+社交線": "流量階級線",
+      "比較線+飛天熱狗線": "現實解構線",
+      "外貌線+社交線": "完美公關線",
+      "外貌線+飛天熱狗線": "夯爆熱狗線",
+      "社交線+飛天熱狗線": "乾杯知己線",
+      "成癮線+比較線+外貌線": "虛擬完美線",
+      "成癮線+比較線+社交線": "數據黑洞線",
+      "成癮線+比較線+飛天熱狗線": "注意力牽引線",
+      "成癮線+外貌線+社交線": "社群表演線",
+      "成癮線+外貌線+飛天熱狗線": "故障美學線",
+      "成癮線+社交線+飛天熱狗線": "派對邊緣人線",
+      "比較線+外貌線+社交線": "全方競爭線",
+      "比較線+外貌線+飛天熱狗線": "睡眠避難線",
+      "比較線+社交線+飛天熱狗線": "社會參照線",
+      "外貌線+社交線+飛天熱狗線": "荒誕劇場線",
+      "成癮線+比較線+外貌線+社交線+飛天熱狗線": "銀河漫遊線"
+    };
 
     const questions = [
       // {
@@ -461,9 +489,19 @@
       };
     }
 
+    function classifyEndingLine(lineCount) {
+      const activeLines = lines.filter((line) => lineCount[line] > 0);
+      const key = activeLines.join("+");
+      return {
+        key,
+        title: lineEndingMap[key] || "未命名結局線"
+      };
+    }
+
     function renderResult() {
       const lineCount = buildLineCount();
       const result = classifyResult(lineCount);
+      const endingLine = classifyEndingLine(lineCount);
       const ending =
         rules.endings[result.title] ||
         (result.category === rules.labels.dominant ? rules.endings["主導"] :
@@ -482,8 +520,10 @@
       nextBtn.disabled = false;
 
       stage.innerHTML = `
-        <p class="pill">${result.category}</p>
+        <p class="pill">類型：${result.category}</p>
+        <p class="pill">結局線：${endingLine.title}</p>
         <h2 class="result-title">${result.title}</h2>
+        <p class="result-desc">結局組合：${endingLine.key || "無"}</p>
         <p class="result-desc">${ending}</p>
         <p class="result-desc">顏色計數：${colorDetail}</p>
         <p class="result-desc">線索計數：${lineDetail}</p>
