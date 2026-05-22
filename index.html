@@ -265,9 +265,16 @@
       extremeAtLeast: 5,
       mixedPatterns: [
         [2, 1, 1, 1, 1],
-        [2, 2, 2, 0, 0]
+        [2, 2, 2, 0, 0],
+        [2, 2, 1, 1, 0]
       ],
       tiePattern: [3, 3, 0, 0, 0],
+      dominantPatterns: [
+        [4, 2, 0, 0, 0],
+        [4, 1, 1, 0, 0],
+        [3, 2, 1, 0, 0],
+        [3, 1, 1, 1, 0]
+      ],
       labels: {
         extreme: "第一類：極端型",
         mixed: "第二類：均勻混合型",
@@ -285,6 +292,25 @@
         "主導": "你目前有明確主軸，行動感很強。只要留一點餘裕，你會走得更穩。",
         "平手": "兩股力量正在拉扯，也代表你有雙重潛能。找到兩者都能呼吸的節奏，就是你的破關點。",
         "規則外分佈": "你走出了一條少見路線，這代表你正在變化中。先觀察、再定義，就是你的新結局起點。"
+      },
+      dominantEndings: {
+        "藍色": "數據黑洞線",
+        "洋紅": "全方競爭線",
+        "綠色": "虛擬完美線",
+        "橘色": "社群表演線",
+        "紅色": "荒誕劇場線"
+      },
+      tieEndings: {
+        "藍色+洋紅": "低迷循環線",
+        "藍色+綠色": "虛擬面具線",
+        "藍色+橘色": "制約快感線",
+        "藍色+紅色": "迷因爆米花線",
+        "洋紅+綠色": "視覺競賽線",
+        "洋紅+橘色": "流量焦慮線",
+        "洋紅+紅色": "現實解構線",
+        "綠色+橘色": "完美公關線",
+        "綠色+紅色": "夯爆熱狗線",
+        "橘色+紅色": "乾杯知己線"
       }
     };
     const lineEndingMap = {
@@ -455,37 +481,45 @@
         const idx = colorCount.indexOf(maxCount);
         return {
           category: rules.labels.extreme,
-          title: `${colorNames[idx]}極端`
+          title: `${colorNames[idx]}極端`,
+          endingLine: `${colorNames[idx]}極端`
         };
       }
 
       if (rules.mixedPatterns.some((pattern) => isPattern(colorCount, pattern))) {
         return {
           category: rules.labels.mixed,
-          title: "均勻混合型"
+          title: "均勻混合型",
+          endingLine: "銀河漫遊線"
         };
       }
 
       if (isPattern(colorCount, rules.tiePattern)) {
         const tied = colorNames.filter((name, i) => colorCount[i] === 3);
+        const tieKey = tied.slice().sort((a, b) => colorNames.indexOf(a) - colorNames.indexOf(b)).join("+");
         return {
           category: rules.labels.tie,
-          title: `${tied[0]}＋${tied[1]}`
+          title: `${tied[0]}＋${tied[1]}`,
+          endingLine: rules.tieEndings[tieKey] || "未命名結局線"
         };
       }
 
       const maxHits = colorCount.filter((n) => n === maxCount).length;
-      if (maxHits === 1) {
+      const isDominantPattern = rules.dominantPatterns.some((pattern) => isPattern(colorCount, pattern));
+      if (maxHits === 1 && isDominantPattern) {
         const idx = colorCount.indexOf(maxCount);
+        const dominantColor = colorNames[idx];
         return {
           category: rules.labels.dominant,
-          title: `${colorNames[idx]}主導`
+          title: `${dominantColor}主導`,
+          endingLine: rules.dominantEndings[dominantColor] || "未命名結局線"
         };
       }
 
       return {
         category: rules.labels.unknown,
-        title: "規則外分佈"
+        title: "規則外分佈",
+        endingLine: "未命名結局線"
       };
     }
 
@@ -501,7 +535,7 @@
     function renderResult() {
       const lineCount = buildLineCount();
       const result = classifyResult(lineCount);
-      const endingLine = classifyEndingLine(lineCount);
+      const endingLine = { title: result.endingLine || "未命名結局線", key: classifyEndingLine(lineCount).key };
       const ending =
         rules.endings[result.title] ||
         (result.category === rules.labels.dominant ? rules.endings["主導"] :
