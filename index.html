@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-Hant">
 
 <head>
@@ -12,15 +12,14 @@
     rel="stylesheet">
   <style>
     :root {
-      --bg-a: #005BAC;
-      --bg-b: #F6A623;
-      --card: #bebcb4bd;
-      --ink: #F6A623;
-      --muted: #005BAC;
-      --accent: #8C4B3B;
-      --accent-2: #2f7d6e;
-      --ring: #B8BDC324;
-      --ok: #D8C7A1;
+      --bg: #000000;
+      --surface: #ffffffbd;
+      --text: #000000;
+      --muted: #000000;
+      --accent: #000000;
+      --border: #B8BDC324;
+      --shadow: rgba(42, 48, 68, 0.14);
+      --white: #ffffff;
     }
 
     * {
@@ -30,25 +29,22 @@
     body {
       margin: 0;
       min-height: 100vh;
-      color: var(--ink);
+      color: var(--text);
       font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
       background:
-        radial-gradient(circle at 10% 15%, rgba(230, 111, 81, 0.16), transparent 25%),
-        radial-gradient(circle at 85% 25%, rgba(47, 125, 110, 0.14), transparent 28%),
-        radial-gradient(circle at 70% 80%, rgba(53, 118, 201, 0.12), transparent 34%),
-        linear-gradient(135deg, var(--bg-a), var(--bg-b));
+        var(--bg);
       display: grid;
       place-items: center;
       padding: 24px 14px;
     }
 
     .shell {
-      width: min(760px, 100%);
-      border: 1px solid #3A3A3Aa6;
+      width: min(1080px, 100%);
+      border: 1px solid var(--border);
       border-radius: 24px;
-      box-shadow: 0 22px 50px rgba(42, 48, 68, 0.14);
+      box-shadow: 0 22px 50px var(--shadow);
       padding: clamp(18px, 3vw, 32px);
-      background: var(--card);
+      background: var(--surface);
       backdrop-filter: blur(12px);
       animation: rise 580ms ease both;
     }
@@ -58,7 +54,7 @@
       font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
       font-size: clamp(2rem, 5vw, 3rem);
       letter-spacing: 0.02em;
-      color: var(--ok);
+      color: var(--accent);
       line-height: 1;
     }
 
@@ -74,7 +70,7 @@
       border-radius: 999px;
       background: #B8BDC3;
       overflow: hidden;
-      border: 1px solid #6e6e6e;
+      border: 1px solid var(--border);
     }
 
     .meter>i {
@@ -82,7 +78,7 @@
       width: 0%;
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--accent), var(--ok));
+      background: var(--accent);
       transition: width 320ms ease;
     }
 
@@ -111,27 +107,27 @@
     }
 
     .option {
-      border: 1px solid var(--ring);
+      border: 1px solid var(--border);
       border-radius: 14px;
       padding: 12px 14px;
-      background: #005BACe6;
+      background: #ffffffe6;
       cursor: pointer;
       transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
       text-align: left;
       font-size: 0.98rem;
-      color: var(--ink);
+      color: var(--text);
     }
 
     .option:hover {
       transform: translateY(-1px);
-      border-color: rgba(230, 111, 81, 0.55);
-      box-shadow: 0 8px 24px rgba(42, 48, 68, 0.08);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px var(--shadow);
     }
 
     .option.active {
-      border-color: var(--accent-2);
-      box-shadow: 0 0 0 3px rgba(47, 125, 110, 0.18);
-      background: #4F7C59;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--shadow);
+      background: #8b8b8b;
     }
 
     .actions {
@@ -151,8 +147,8 @@
     }
 
     .ghost {
-      background: #eef1f5;
-      color: #445068;
+      background: var(--surface);
+      color: var(--text);
     }
 
     .ghost:disabled {
@@ -162,7 +158,7 @@
 
     .main {
       background: var(--accent);
-      color: #fff;
+      color: var(--white);
     }
 
     .main:disabled {
@@ -173,13 +169,46 @@
     .result-title {
       margin: 4px 0 8px;
       font-size: clamp(1.3rem, 3vw, 1.9rem);
-      color: var(--ok);
+      color: var(--accent);
     }
 
     .result-desc {
       margin: 0;
       line-height: 1.7;
-      color: var(--ink);
+      color: var(--text);
+    }
+
+    .result-visual {
+      width: min(540px, 100%);
+      position: relative;
+      display: grid;
+      place-items: center;
+      margin: 4px auto 14px;
+    }
+
+    .result-template {
+      width: 100%;
+      display: block;
+    }
+
+    .result-mascot {
+      width: 46%;
+      max-height: 62%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .result-meta {
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      color: var(--text);
+      line-height: 1.7;
     }
 
     .pill {
@@ -189,7 +218,7 @@
       border-radius: 999px;
       padding: 8px 12px;
       background: var(--accent);
-      color: #ffffff;
+      color: var(--white);
       margin-bottom: 10px;
       font-size: 0.92rem;
       font-weight: 700;
@@ -313,35 +342,176 @@
         "橘色+紅色": "乾杯知己線"
       }
     };
-    const lineEndingMap = {
-      "成癮線": "成癮線",
-      "比較線": "比較線",
-      "外貌線": "外貌線",
-      "社交線": "社交線",
-      "飛天熱狗線": "飛天熱狗線",
-      "成癮線+比較線": "低迷循環線",
-      "成癮線+外貌線": "虛擬面具線",
-      "成癮線+社交線": "制約快感線",
-      "成癮線+飛天熱狗線": "迷因爆米花線",
-      "比較線+外貌線": "視覺競賽線",
-      "比較線+社交線": "流量階級線",
-      "比較線+飛天熱狗線": "現實解構線",
-      "外貌線+社交線": "完美公關線",
-      "外貌線+飛天熱狗線": "夯爆熱狗線",
-      "社交線+飛天熱狗線": "乾杯知己線",
-      "成癮線+比較線+外貌線": "虛擬完美線",
-      "成癮線+比較線+社交線": "數據黑洞線",
-      "成癮線+比較線+飛天熱狗線": "注意力牽引線",
-      "成癮線+外貌線+社交線": "社群表演線",
-      "成癮線+外貌線+飛天熱狗線": "故障美學線",
-      "成癮線+社交線+飛天熱狗線": "派對邊緣人線",
-      "比較線+外貌線+社交線": "全方競爭線",
-      "比較線+外貌線+飛天熱狗線": "睡眠避難線",
-      "比較線+社交線+飛天熱狗線": "社會參照線",
-      "外貌線+社交線+飛天熱狗線": "荒誕劇場線",
-      "成癮線+比較線+外貌線+社交線+飛天熱狗線": "銀河漫遊線"
+    const endingContent = {
+      "成癮": {
+        image: "img/結果圖/成癮線.png",
+        symbol: "小黃計程車",
+        description: "你容易被即時刺激牽著走，像一直跳表的車程，越想停下越容易繼續前進。",
+        slogans: "停一下，方向盤會回到你手上。"
+      },
+      "藍色極端": {
+        image: "img/結果圖/成癮線.png",
+        symbol: "小黃計程車",
+        description: "你容易被即時刺激牽著走，像一直跳表的車程，越想停下越容易繼續前進。",
+        slogans: "停一下，方向盤會回到你手上。"
+      },
+      "低迷循環線": {
+        image: "img/結果圖/低迷循環線.png",
+        symbol: "循環車票",
+        description: "成癮與比較互相加速，讓你在刷、看、比、再刷之間繞圈。",
+        slogans: "別人的終點，不是你的月台。"
+      },
+      "數據黑洞線": {
+        image: "img/結果圖/數據黑洞線.png",
+        symbol: "黑洞計程車",
+        description: "數字像重力一樣吸住注意力，越想確認表現，越容易被流量拉走。",
+        slogans: "你不是數據的衛星。"
+      },
+      "比較": {
+        image: "img/結果圖/比較線.png",
+        symbol: "阪堺電車",
+        description: "你對位置、差距與排名很敏銳，也容易把人生看成一場持續更新的競賽。",
+        slogans: "軌道很多條，不必每站都贏。"
+      },
+      "洋紅極端": {
+        image: "img/結果圖/比較線.png",
+        symbol: "阪堺電車",
+        description: "你對位置、差距與排名很敏銳，也容易把人生看成一場持續更新的競賽。",
+        slogans: "軌道很多條，不必每站都贏。"
+      },
+      "全方競爭線": {
+        image: "img/結果圖/全方競爭線.png",
+        symbol: "競技月台",
+        description: "比較感全面展開，成績、外表、社交表現都像同時開跑。",
+        slogans: "你可以下車，不必每場都參賽。"
+      },
+      "流量焦慮線": {
+        image: "img/結果圖/焦慮流量線.png",
+        symbol: "通知看板",
+        description: "你很在意他人的回應，也容易把互動數字當成自己的即時評分。",
+        slogans: "被看見很好，但不等於被定義。"
+      },
+      "視覺競賽線": {
+        image: "img/結果圖/視覺競賽線.png",
+        symbol: "展示櫥窗",
+        description: "比較與外貌感交疊，讓你容易在畫面、形象與他人標準之間拉扯。",
+        slogans: "好看不是唯一的通關密語。"
+      },
+      "外貌": {
+        image: "img/結果圖/外貌.png",
+        symbol: "補妝鏡",
+        description: "你對形象細節有高度感知，也可能因此對自己格外嚴格。",
+        slogans: "你不需要完美才值得登場。"
+      },
+      "綠色極端": {
+        image: "img/結果圖/外貌.png",
+        symbol: "補妝鏡",
+        description: "你對形象細節有高度感知，也可能因此對自己格外嚴格。",
+        slogans: "你不需要完美才值得登場。"
+      },
+      "完美公開線": {
+        image: "img/結果圖/完美公關線.png",
+        symbol: "公關看板",
+        description: "你擅長維持漂亮的社交形象，但也可能把每次亮相都當成壓力測試。",
+        slogans: "真實也可以很體面。"
+      },
+      "完美公關線": {
+        image: "img/結果圖/完美公關線.png",
+        symbol: "公關看板",
+        description: "你擅長維持漂亮的社交形象，但也可能把每次亮相都當成壓力測試。",
+        slogans: "真實也可以很體面。"
+      },
+      "虛擬完美線": {
+        image: "img/結果圖/虛擬完美線.png",
+        symbol: "濾鏡車窗",
+        description: "你追求線上呈現的完整與精準，容易在修飾中消耗太多能量。",
+        slogans: "不完美的版本，也能抵達。"
+      },
+      "虛擬面具線": {
+        image: "img/結果圖/虛擬面具線.png",
+        symbol: "透明面具",
+        description: "你可能在外表與線上狀態之間切換不同角色，保護自己也隱藏自己。",
+        slogans: "摘下面具時，你仍然成立。"
+      },
+      "社交": {
+        image: "img/結果圖/社交.png",
+        symbol: "候車人群",
+        description: "你很重視關係中的回應與連結，也容易被他人的反應影響心情。",
+        slogans: "有人同行很好，自己也能穩穩前進。"
+      },
+      "橘色極端": {
+        image: "img/結果圖/社交.png",
+        symbol: "候車人群",
+        description: "你很重視關係中的回應與連結，也容易被他人的反應影響心情。",
+        slogans: "有人同行很好，自己也能穩穩前進。"
+      },
+      "制約快感線": {
+        image: "img/結果圖/制約快感線.png",
+        symbol: "通知鈴",
+        description: "回覆、讚數與互動像提示音一樣牽動你，帶來期待也帶來不安。",
+        slogans: "提示音可以響，主控權留給你。"
+      },
+      "社群表演線": {
+        image: "img/結果圖/社群表演線.png",
+        symbol: "移動舞台",
+        description: "你很懂得在社群中表現自己，也可能因此一直維持上場狀態。",
+        slogans: "不用每一刻都亮相。"
+      },
+      "飛天熱狗線": {
+        image: "img/結果圖/飛天熱狗.png",
+        symbol: "飛天熱狗",
+        description: "你的荒誕感與幽默感很強，常用意外的角度把世界變得比較好笑。",
+        slogans: "離奇不是偏航，是你的燃料。"
+      },
+      "紅色極端": {
+        image: "img/結果圖/飛天熱狗.png",
+        symbol: "飛天熱狗",
+        description: "你的荒誕感與幽默感很強，常用意外的角度把世界變得比較好笑。",
+        slogans: "離奇不是偏航，是你的燃料。"
+      },
+      "夯爆熱狗線": {
+        image: "img/結果圖/夯爆熱狗.png",
+        symbol: "熱狗聚光燈",
+        description: "外貌感與荒誕感碰撞，讓你像一個自帶舞台效果的奇妙角色。",
+        slogans: "怪得漂亮，就是一種風格。"
+      },
+      "荒誕劇場線": {
+        image: "img/結果圖/荒誕劇場線.png",
+        symbol: "荒誕劇場",
+        description: "你把形象、社交與幽默混成一場演出，熱鬧底下也藏著敏銳觀察。",
+        slogans: "謝幕以前，先照顧真正的自己。"
+      },
+      "迷因爆米花線": {
+        image: "img/結果圖/迷因爆米花線.png",
+        symbol: "迷因爆米花",
+        description: "你很會用迷因與即時刺激轉換情緒，笑聲常常是你的逃生門。",
+        slogans: "笑完之後，也記得回來抱住自己。"
+      },
+      "乾杯知己線": {
+        image: "img/結果圖/乾杯知己線.png",
+        symbol: "乾杯車廂",
+        description: "你在社交與荒誕之間找到默契，越奇怪的笑點越像辨認同伴的暗號。",
+        slogans: "懂你的人，會在同一站大笑。"
+      },
+      "現實解構線": {
+        image: "img/結果圖/現實解構線.png",
+        symbol: "拆解路線圖",
+        description: "你會用荒誕感拆解比較壓力，把太嚴肅的現實轉成可以呼吸的距離。",
+        slogans: "看破不等於放棄，是換個角度活。"
+      },
+      "銀河漫遊線": {
+        image: "img/結果圖/銀河漫遊線.png",
+        symbol: "銀河列車",
+        description: "你的狀態混合多種線索，像一趟橫跨不同星系的旅程，混亂但充滿彈性。",
+        slogans: "宇宙很大，你不用只是一種樣子。"
+      }
     };
-
+    const defaultEndingContent = {
+      image: "",
+      symbol: "尚未指定",
+      description: "這條結局線的詳細資料尚未建立，但測驗結果仍可正常顯示。",
+      slogans: "先抵達，再補上風景。"
+    };
     const questions = [
       // {
       //   text: "??????",
@@ -523,19 +693,39 @@
       };
     }
 
-    function classifyEndingLine(lineCount) {
+    function getActiveLineKey(lineCount) {
       const activeLines = lines.filter((line) => lineCount[line] > 0);
-      const key = activeLines.join("+");
-      return {
-        key,
-        title: lineEndingMap[key] || "未命名結局線"
-      };
+      return activeLines.join("+");
+    }
+
+    function getMainLine(lineCount) {
+      const maxCount = Math.max(...lines.map((line) => lineCount[line]));
+      return lines.find((line) => lineCount[line] === maxCount) || lines[0];
+    }
+
+    function getTemplateImagePath(mainLine) {
+      return `img/結果頁面/${mainLine}.png`;
+    }
+
+    function getEndingImagePath(endingLineTitle, content) {
+      return content.image || `img/結果圖/${endingLineTitle}.png`;
+    }
+
+    function getEndingContent(endingLineTitle) {
+      return endingContent[endingLineTitle] || defaultEndingContent;
     }
 
     function renderResult() {
       const lineCount = buildLineCount();
       const result = classifyResult(lineCount);
-      const endingLine = { title: result.endingLine || "未命名結局線", key: classifyEndingLine(lineCount).key };
+      const endingLine = {
+        title: result.endingLine || "未命名結局線",
+        key: getActiveLineKey(lineCount)
+      };
+      const mainLine = getMainLine(lineCount);
+      const templateImage = getTemplateImagePath(mainLine);
+      const content = getEndingContent(endingLine.title);
+      const endingImage = getEndingImagePath(endingLine.title, content);
       const ending =
         rules.endings[result.title] ||
         (result.category === rules.labels.dominant ? rules.endings["主導"] :
@@ -555,8 +745,18 @@
 
       stage.innerHTML = `
         <p class="pill">類型：${result.category}</p>
+        <p class="pill">主線：${mainLine}</p>
         <p class="pill">結局線：${endingLine.title}</p>
+        <div class="result-visual">
+          <img class="result-template" src="${templateImage}" alt="${mainLine} 結果頁模板" onerror="this.hidden=true">
+          ${endingImage ? `<img class="result-mascot" src="${endingImage}" alt="${endingLine.title} 結局圖片" onerror="this.hidden=true">` : ""}
+        </div>
         <h2 class="result-title">${result.title}</h2>
+        <ul class="result-meta">
+          <li><strong>象徵：</strong>${content.symbol}</li>
+          <li><strong>說明：</strong>${content.description}</li>
+          <li><strong>人格標語：</strong>${content.slogans}</li>
+        </ul>
         <p class="result-desc">結局組合：${endingLine.key || "無"}</p>
         <p class="result-desc">${ending}</p>
         <p class="result-desc">顏色計數：${colorDetail}</p>
@@ -594,3 +794,4 @@
 </body>
 
 </html>
+
