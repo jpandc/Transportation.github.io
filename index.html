@@ -179,28 +179,52 @@
     }
 
     .result-visual {
-      width: min(540px, 100%);
-      position: relative;
-      display: grid;
-      place-items: center;
+      width: min(860px, 100%);
       margin: 4px auto 14px;
     }
 
-    .result-template {
+    .result-page-image {
       width: 100%;
+      height: auto;
+      object-fit: contain;
       display: block;
     }
 
-    .result-mascot {
-      width: 46%;
-      max-height: 62%;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
+    .ticket-gate {
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+      margin: 18px auto;
+      text-align: center;
+    }
+
+    .ticket-button {
+      width: min(520px, 100%);
+      padding: 0;
+      border-radius: 18px;
+      background: transparent;
+      color: var(--text);
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+    }
+
+    .ticket-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .ticket-image {
+      width: 100%;
+      height: auto;
       display: block;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+    }
+
+    .ticket-fallback {
+      padding: 10px 18px;
+      border: 2px solid var(--text);
+      border-radius: 999px;
+      background: var(--white);
+      box-shadow: 4px 4px 0 var(--text);
     }
 
     .result-meta {
@@ -224,6 +248,197 @@
       font-weight: 700;
     }
 
+    .quiz-mode {
+      width: min(1280px, calc(100vw - 28px));
+      aspect-ratio: 3 / 2;
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+      background: url("img/UI/內頁/第 站.png") center / cover no-repeat;
+      background-size: contain;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .quiz-mode .brand,
+    .quiz-mode .lead,
+    .quiz-mode .meter,
+    .quiz-mode .step {
+      display: none;
+    }
+
+    .quiz-mode .stage {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      min-height: 0;
+    }
+
+    .quiz-layout {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      padding: clamp(46px, 5.8vw, 78px) clamp(42px, 6.4vw, 86px);
+    }
+
+    .question-panel {
+      width: min(68%, 820px);
+      color: var(--text);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      row-gap: 14px;
+      align-content: start;
+    }
+
+    .question-number {
+      margin: 0;
+      font-size: clamp(2.4rem, 4.5vw, 4.4rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .question-title {
+      margin: 0;
+      font-size: clamp(1.3rem, 2.25vw, 2rem);
+      font-weight: 900;
+      line-height: 1.45;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .quiz-mode .options {
+      width: min(62%, 760px);
+      position: absolute;
+      left: clamp(42px, 6.4vw, 86px);
+      top: clamp(300px, 38vh, 500px);
+      display: grid;
+      gap: clamp(10px, 1.15vh, 14px);
+    }
+
+    .quiz-mode .option {
+      width: 100%;
+      min-height: clamp(10px, 7.8vh, 30px);
+      display: grid;
+      grid-template-columns: clamp(66px, 6vw, 88px) 1fr clamp(46px, 4vw, 62px);
+      align-items: stretch;
+      padding: 0;
+      overflow: hidden;
+      border: 3px solid var(--text);
+      border-radius: 18px;
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--text);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .quiz-mode .option-letter {
+      display: grid;
+      place-items: center;
+      background: #F6A623;
+      color: var(--text);
+      font-size: clamp(1.35rem, 2vw, 1.7rem);
+      font-weight: 900;
+      border-right: 3px solid var(--text);
+    }
+
+    .quiz-mode .option-text {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      line-height: 1.45;
+      text-align: left;
+      font-size: clamp(0.98rem, 1.28vw, 1.18rem);
+    }
+
+    .quiz-mode .option-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+    }
+
+    .quiz-mode .option:hover,
+    .quiz-mode .option.active {
+      transform: translateX(4px);
+      border-color: var(--text);
+      background: #fff7dd;
+    }
+
+    .station-progress {
+      position: absolute;
+      left: clamp(250px, 6.4vw, 300px);
+      bottom: clamp(22px, 2.8vw, 38px);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--text);
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.72);
+      border: 2px solid var(--text);
+      border-radius: 999px;
+      padding: 10px 18px;
+    }
+
+    .station-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .station-dot {
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--text);
+      border-radius: 999px;
+      background: var(--white);
+    }
+
+    .station-dot.active {
+      background: #F6A623;
+    }
+
+    .station-count {
+      min-width: 78px;
+      font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+    }
+
+    .station-name {
+      color: var(--text);
+      font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+    }
+
+    .quiz-mode .actions {
+      position: absolute;
+      right: clamp(30px, 4.2vw, 58px);
+      bottom: clamp(26px, 3vw, 42px);
+      margin: 0;
+      z-index: 3;
+    }
+
+    .quiz-mode .ghost {
+      width: clamp(86px, 8vw, 200px);
+      aspect-ratio: 2.7 / 1;
+      padding: 0 10px;
+      border-radius: 0;
+      background-color: transparent;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      color: var(--white);
+      font-size: clamp(0.72rem, 0.9vw, 0.9rem);
+      line-height: 1;
+      text-shadow: 0 1px 3px var(--text);
+    }
+
+    .quiz-mode #prevBtn {
+      background-image: url("img/UI/上下一步/上一站.png");
+    }
+
+    .quiz-mode #nextBtn {
+      background-image: url("img/UI/上下一步/下一站.png");
+    }
+
     @media (max-width: 640px) {
       .shell {
         border-radius: 18px;
@@ -235,6 +450,42 @@
 
       button {
         width: 100%;
+      }
+
+      .quiz-mode {
+        width: min(100%, 520px);
+        min-height: 760px;
+        aspect-ratio: auto;
+        background-size: cover;
+        overflow: visible;
+      }
+
+      .quiz-layout {
+        padding: 28px 18px;
+      }
+
+      .question-panel,
+      .quiz-mode .options {
+        width: 100%;
+        position: static;
+      }
+
+      .quiz-mode .options {
+        margin-top: 24px;
+      }
+
+      .station-progress,
+      .quiz-mode .actions {
+        position: static;
+        margin-top: 24px;
+      }
+
+      .station-progress {
+        flex-wrap: wrap;
+      }
+
+      .quiz-mode .actions {
+        flex-direction: row;
       }
     }
 
@@ -275,8 +526,8 @@
     <section class="stage" id="stage"></section>
 
     <div class="actions" id="actions">
-      <button class="ghost" id="prevBtn" type="button">上一題</button>
-      <button class="ghost" id="nextBtn" type="button" disabled>下一題</button>
+      <button class="ghost" id="prevBtn" type="button"></button>
+      <button class="ghost" id="nextBtn" type="button" disabled></button>
     </div>
   </main>
 
@@ -512,6 +763,38 @@
       description: "這條結局線的詳細資料尚未建立，但測驗結果仍可正常顯示。",
       slogans: "先抵達，再補上風景。"
     };
+    const ticketImagePath = "img/車票外觀/Ticket2.png";
+    const resultPageImageMap = {
+      "成癮": "img/結果頁面/成癮線.png",
+      "藍色極端": "img/結果頁面/成癮線.png",
+      "比較": "img/結果頁面/比較線.png",
+      "洋紅極端": "img/結果頁面/比較線.png",
+      "外貌": "img/結果頁面/外貌線.png",
+      "綠色極端": "img/結果頁面/外貌線.png",
+      "社交": "img/結果頁面/社交線.png",
+      "橘色極端": "img/結果頁面/社交線.png",
+      "飛天熱狗線": "img/結果頁面/飛天熱狗線.png",
+      "紅色極端": "img/結果頁面/飛天熱狗線.png",
+      "低迷循環線": "img/結果頁面/低迷循環線.png",
+      "數據黑洞線": "img/結果頁面/數據黑洞線.png",
+      "全方競爭線": "img/結果頁面/全方競爭線.png",
+      "流量焦慮線": "img/結果頁面/流量焦慮線.png",
+      "焦慮流量線": "img/結果頁面/流量焦慮線.png",
+      "視覺競賽線": "img/結果頁面/視覺競賽線.png",
+      "完美公開線": "img/結果頁面/完美公開線.png",
+      "完美公關線": "img/結果頁面/完美公開線.png",
+      "虛擬完美線": "img/結果頁面/虛擬完美線.png",
+      "虛擬面具線": "img/結果頁面/虛擬面具線.png",
+      "制約快感線": "img/結果頁面/制約快感線.png",
+      "社群表演線": "img/結果頁面/社群表演線.png",
+      "夯爆熱狗線": "img/結果頁面/夯爆熱狗線.png",
+      "潮爆熱狗線": "img/結果頁面/夯爆熱狗線.png",
+      "荒誕劇場線": "img/結果頁面/荒誕劇場線.png",
+      "迷因爆米花線": "img/結果頁面/迷因爆米花線.png",
+      "乾杯知己線": "img/結果頁面/乾杯知己線.png",
+      "現實解構線": "img/結果頁面/現實解構線.png",
+      "銀河漫遊線": "img/結果頁面/銀河漫遊線.png"
+    };
     const questions = [
       // {
       //   text: "??????",
@@ -582,6 +865,7 @@
     ];
 
     const stage = document.getElementById("stage");
+    const shell = document.querySelector(".shell");
     const step = document.getElementById("step");
     const bar = document.getElementById("bar");
     const prevBtn = document.getElementById("prevBtn");
@@ -597,21 +881,38 @@
     }
 
     function renderQuestion() {
+      shell.classList.add("quiz-mode");
       updateMeter();
       const q = questions[current];
+      const letters = ["A", "B", "C", "D", "E"];
+      const dots = questions.map((_, idx) => `
+        <i class="station-dot ${idx === current ? "active" : ""}" aria-hidden="true"></i>
+      `).join("");
       stage.innerHTML = `
-        <h2 class="q">${q.text}</h2>
-        <div class="options">
-          ${q.options.map((opt, idx) => `
-            <button class="option ${answers[current] === idx ? "active" : ""}" type="button" data-idx="${idx}">
-              ${opt.label}
-            </button>
-          `).join("")}
+        <div class="quiz-layout">
+          <section class="question-panel">
+            <p class="question-number">Q${current + 1}.</p>
+            <h2 class="q question-title">${q.text}</h2>
+          </section>
+          <div class="options">
+            ${q.options.map((opt, idx) => `
+              <button class="option ${answers[current] === idx ? "active" : ""}" type="button" data-idx="${idx}">
+                <span class="option-letter">${letters[idx]}</span>
+                <span class="option-text">${opt.label}</span>
+                <span class="option-arrow" aria-hidden="true">›</span>
+              </button>
+            `).join("")}
+          </div>
+          <div class="station-progress" aria-label="目前站數進度">
+            <span class="station-dots">${dots}</span>
+            <span class="station-count">${current + 1} / ${questions.length} 站</span>
+            <span class="station-name">目前第 ${current + 1} 站</span>
+          </div>
         </div>
       `;
 
       prevBtn.disabled = current === 0;
-      nextBtn.textContent = current === questions.length - 1 ? "看結果" : "下一題";
+      nextBtn.textContent = current === questions.length - 1 ? "看結果" : "";
       nextBtn.disabled = answers[current] === null;
 
       stage.querySelectorAll(".option").forEach((el) => {
@@ -698,58 +999,38 @@
       return activeLines.join("+");
     }
 
-    function getMainLine(lineCount) {
-      const maxCount = Math.max(...lines.map((line) => lineCount[line]));
-      return lines.find((line) => lineCount[line] === maxCount) || lines[0];
+    function getResultPageImagePath(endingLineTitle, content) {
+      return resultPageImageMap[endingLineTitle] || content.image || "";
     }
 
-    function getTemplateImagePath(mainLine) {
-      return `img/結果頁面/${mainLine}.png`;
-    }
-
-    function getEndingImagePath(endingLineTitle, content) {
-      return content.image || `img/結果圖/${endingLineTitle}.png`;
+    function getImageErrorHandler(primaryImage, fallbackImage) {
+      if (fallbackImage && fallbackImage !== primaryImage) {
+        return `this.onerror=null;this.src='${fallbackImage}'`;
+      }
+      return "this.hidden=true";
     }
 
     function getEndingContent(endingLineTitle) {
       return endingContent[endingLineTitle] || defaultEndingContent;
     }
 
-    function renderResult() {
-      const lineCount = buildLineCount();
-      const result = classifyResult(lineCount);
-      const endingLine = {
-        title: result.endingLine || "未命名結局線",
-        key: getActiveLineKey(lineCount)
-      };
-      const mainLine = getMainLine(lineCount);
-      const templateImage = getTemplateImagePath(mainLine);
-      const content = getEndingContent(endingLine.title);
-      const endingImage = getEndingImagePath(endingLine.title, content);
-      const ending =
-        rules.endings[result.title] ||
-        (result.category === rules.labels.dominant ? rules.endings["主導"] :
-          result.category === rules.labels.tie ? rules.endings["平手"] :
-            rules.endings["規則外分佈"]);
-      const colorDetail = colorNames.map((color) => {
-        const line = Object.keys(lineToColor).find((key) => lineToColor[key] === color);
-        return `${color} ${lineCount[line]}`;
-      }).join(" ・ ");
-      const lineDetail = lines.map((line) => `${line} ${lineCount[line]}`).join(" ・ ");
-
-      step.textContent = "測驗完成";
-      bar.style.width = "100%";
-      prevBtn.style.display = "none";
-      nextBtn.textContent = "重新測驗";
-      nextBtn.disabled = false;
+    function renderResultPage(resultData) {
+      const {
+        result,
+        endingLine,
+        content,
+        resultPageImage,
+        imageErrorHandler,
+        ending,
+        colorDetail,
+        lineDetail
+      } = resultData;
 
       stage.innerHTML = `
         <p class="pill">類型：${result.category}</p>
-        <p class="pill">主線：${mainLine}</p>
         <p class="pill">結局線：${endingLine.title}</p>
         <div class="result-visual">
-          <img class="result-template" src="${templateImage}" alt="${mainLine} 結果頁模板" onerror="this.hidden=true">
-          ${endingImage ? `<img class="result-mascot" src="${endingImage}" alt="${endingLine.title} 結局圖片" onerror="this.hidden=true">` : ""}
+          ${resultPageImage ? `<img class="result-page-image" src="${resultPageImage}" alt="${endingLine.title} 完整結果頁" onerror="${imageErrorHandler}">` : ""}
         </div>
         <h2 class="result-title">${result.title}</h2>
         <ul class="result-meta">
@@ -762,6 +1043,61 @@
         <p class="result-desc">顏色計數：${colorDetail}</p>
         <p class="result-desc">線索計數：${lineDetail}</p>
       `;
+    }
+
+    function renderResult() {
+      shell.classList.remove("quiz-mode");
+      const lineCount = buildLineCount();
+      const result = classifyResult(lineCount);
+      const endingLine = {
+        title: result.endingLine || "未命名結局線",
+        key: getActiveLineKey(lineCount)
+      };
+      const content = getEndingContent(endingLine.title);
+      const resultPageImage = getResultPageImagePath(endingLine.title, content);
+      const imageErrorHandler = getImageErrorHandler(resultPageImage, content.image);
+      const ending =
+        rules.endings[result.title] ||
+        (result.category === rules.labels.dominant ? rules.endings["主導"] :
+          result.category === rules.labels.tie ? rules.endings["平手"] :
+            rules.endings["規則外分佈"]);
+      const colorDetail = colorNames.map((color) => {
+        const line = Object.keys(lineToColor).find((key) => lineToColor[key] === color);
+        return `${color} ${lineCount[line]}`;
+      }).join(" ・ ");
+      const lineDetail = lines.map((line) => `${line} ${lineCount[line]}`).join(" ・ ");
+      const resultData = {
+        result,
+        endingLine,
+        content,
+        resultPageImage,
+        imageErrorHandler,
+        ending,
+        colorDetail,
+        lineDetail
+      };
+
+      step.textContent = "請取票查看結果";
+      bar.style.width = "100%";
+      prevBtn.style.display = "none";
+      nextBtn.textContent = "重新測驗";
+      nextBtn.disabled = false;
+
+      stage.innerHTML = `
+        <div class="ticket-gate">
+          <p class="pill">結果車票已產生</p>
+          <button class="ticket-button" id="ticketBtn" type="button" aria-label="查看測驗結果">
+            <img class="ticket-image" src="${ticketImagePath}" alt="查看結果車票" onerror="this.hidden=true">
+            <span class="ticket-fallback">查看結果</span>
+          </button>
+          <p class="result-desc">點擊車票查看你的完整結果頁。</p>
+        </div>
+      `;
+
+      stage.querySelector("#ticketBtn").addEventListener("click", () => {
+        step.textContent = "測驗完成";
+        renderResultPage(resultData);
+      });
 
       nextBtn.onclick = () => {
         current = 0;
@@ -794,4 +1130,3 @@
 </body>
 
 </html>
-
