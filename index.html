@@ -27,6 +27,7 @@
     }
 
     body {
+      position: relative;
       margin: 0;
       min-height: 100vh;
       color: var(--text);
@@ -36,9 +37,24 @@
       display: grid;
       place-items: center;
       padding: 24px 14px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -6%;
+      z-index: 0;
+      background: url("img/結果圖/銀河漫遊線.png") center / cover no-repeat;
+      filter: blur(30px);
+      opacity: 0.38;
+      transform: scale(1.12);
+      pointer-events: none;
     }
 
     .shell {
+      position: relative;
+      z-index: 1;
       width: min(1920px, 100%);
       border: 1px solid var(--border);
       border-radius: 24px;
@@ -210,24 +226,56 @@
     .ticket-gate {
       display: grid;
       justify-items: center;
+      gap: 14px;
       margin: 18px auto;
     }
 
-    .ticket-image {
+    .ticket-card {
+      position: relative;
       width: 1040px;
+      max-width: 100%;
       height: auto;
-      display: block;
       cursor: pointer;
       transition: transform 220ms ease;
     }
 
-    .ticket-image:hover {
+    .ticket-card:hover {
       transform: scale(1.04);
     }
 
-    .ticket-image.ticket-exit {
+    .ticket-card.ticket-exit {
       animation: ticketExitToCorner 500ms ease forwards;
       pointer-events: none;
+    }
+
+    .ticket-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .ticket-date {
+      position: absolute;
+      left: 6.9%;
+      bottom: 7%;
+      color: #12305a;
+      font-size: clamp(13px, 1.45vw, 18px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .ticket-hint {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: clamp(0.9rem, 1.4vw, 1.12rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-align: center;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.42), 0 2px 8px rgba(0, 0, 0, 0.42);
+      animation: ticketHintPulse 3.2s ease-in-out infinite;
     }
 
     .result-page-image.restartable {
@@ -597,6 +645,17 @@
       }
 
       to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes ticketHintPulse {
+      0%,
+      100% {
+        opacity: 0.72;
+      }
+
+      50% {
         opacity: 1;
       }
     }
@@ -1041,6 +1100,13 @@
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
+    function formatTicketDate(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}.${month}.${day}`;
+    }
+
     function clearTransitionClasses() {
       stage.classList.remove(
         "transition-exit-left",
@@ -1260,10 +1326,15 @@
 
       bar.style.width = "100%";
       actions.style.display = "none";
+      const ticketDate = formatTicketDate();
 
       stage.innerHTML = `
         <div class="ticket-gate">
-          <img class="ticket-image" id="ticketBtn" src="${ticketImagePath}" alt="查看結果車票" onerror="this.hidden=true">
+          <div class="ticket-card" id="ticketBtn" aria-label="查看結果">
+            <img class="ticket-image" src="${ticketImagePath}" alt="查看結果車票" onerror="this.hidden=true">
+            <span class="ticket-date">${ticketDate}</span>
+          </div>
+          <p class="ticket-hint">這是專屬於你的車票，點擊它前往下一站吧</p>
         </div>
       `;
 
