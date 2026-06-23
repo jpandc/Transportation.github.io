@@ -39,7 +39,7 @@
     }
 
     .shell {
-      width: min(1080px, 100%);
+      width: min(1920px, 100%);
       border: 1px solid var(--border);
       border-radius: 24px;
       box-shadow: 0 22px 50px var(--shadow);
@@ -92,6 +92,22 @@
       margin-top: 16px;
       min-height: 290px;
       animation: fadeIn 280ms ease;
+    }
+
+    .stage.transition-exit-left {
+      animation: pageExitLeft 500ms ease both;
+    }
+
+    .stage.transition-exit-up {
+      animation: pageExitUp 500ms ease both;
+    }
+
+    .stage.transition-enter-right {
+      animation: pageEnterRight 500ms ease both;
+    }
+
+    .stage.transition-enter-bottom {
+      animation: pageEnterBottom 500ms ease both;
     }
 
     .q {
@@ -188,43 +204,89 @@
       height: auto;
       object-fit: contain;
       display: block;
+      animation: resultImageFadeIn 700ms ease both;
     }
 
     .ticket-gate {
       display: grid;
       justify-items: center;
-      gap: 14px;
       margin: 18px auto;
-      text-align: center;
-    }
-
-    .ticket-button {
-      width: min(520px, 100%);
-      padding: 0;
-      border-radius: 18px;
-      background: transparent;
-      color: var(--text);
-      display: grid;
-      justify-items: center;
-      gap: 10px;
-    }
-
-    .ticket-button:hover {
-      transform: translateY(-2px);
     }
 
     .ticket-image {
-      width: 100%;
+      width: 1040px;
       height: auto;
       display: block;
+      cursor: pointer;
+      transition: transform 220ms ease;
     }
 
-    .ticket-fallback {
-      padding: 10px 18px;
-      border: 2px solid var(--text);
-      border-radius: 999px;
-      background: var(--white);
-      box-shadow: 4px 4px 0 var(--text);
+    .ticket-image:hover {
+      transform: scale(1.04);
+    }
+
+    .ticket-image.ticket-exit {
+      animation: ticketExitToCorner 500ms ease forwards;
+      pointer-events: none;
+    }
+
+    .result-page-image.restartable {
+      cursor: pointer;
+    }
+
+    .cover-mode,
+    .result-image-mode {
+      width: min(1080px, calc(100vw - 28px));
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      background: transparent;
+      backdrop-filter: none;
+    }
+
+    .cover-mode .brand,
+    .cover-mode .lead,
+    .cover-mode .meter,
+    .cover-mode .step,
+    .cover-mode .actions {
+      display: none;
+    }
+
+    .cover-mode .stage {
+      margin-top: 0;
+    }
+
+    .cover-image {
+      width: min(1280px, 100%);
+      height: auto;
+      display: block;
+      cursor: pointer;
+      animation: coverFloat 4s ease-in-out infinite;
+    }
+
+    .result-image-mode .actions {
+      display: none;
+    }
+
+    .result-image-mode .ticket-image {
+      max-width: 100%;
+    }
+
+    .result-image-mode .result-page-image {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .result-image-mode .brand,
+    .result-image-mode .lead,
+    .result-image-mode .meter,
+    .result-image-mode .step {
+      display: none;
+    }
+
+    .result-image-mode .stage {
+      margin-top: 0;
     }
 
     .result-meta {
@@ -429,6 +491,7 @@
       font-size: clamp(0.72rem, 0.9vw, 0.9rem);
       line-height: 1;
       text-shadow: 0 1px 3px var(--text);
+      filter: drop-shadow(0 7px 9px rgba(0, 0, 0, 0.28));
     }
 
     .quiz-mode #prevBtn {
@@ -437,6 +500,10 @@
 
     .quiz-mode #nextBtn {
       background-image: url("img/UI/上下一步/下一站.png");
+    }
+
+    .quiz-mode #nextBtn.result-next {
+      background-image: url("img/UI/上下一步/看結果.png");
     }
 
     @media (max-width: 640px) {
@@ -510,6 +577,87 @@
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+
+    @keyframes coverFloat {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes resultImageFadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes pageExitLeft {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateX(-110%);
+      }
+    }
+
+    @keyframes pageExitUp {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      to {
+        opacity: 0;
+        transform: translateY(-110%);
+      }
+    }
+
+    @keyframes pageEnterRight {
+      from {
+        opacity: 0;
+        transform: translateX(110%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pageEnterBottom {
+      from {
+        opacity: 0;
+        transform: translateY(110%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes ticketExitToCorner {
+      from {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+
+      to {
+        opacity: 0;
+        transform: translate(42vw, -36vh) scale(0.62);
       }
     }
   </style>
@@ -763,16 +911,22 @@
       description: "這條結局線的詳細資料尚未建立，但測驗結果仍可正常顯示。",
       slogans: "先抵達，再補上風景。"
     };
+    const coverImagePath = "img/UI/封面.png";
     const ticketImagePath = "img/車票外觀/Ticket2.png";
     const resultPageImageMap = {
       "成癮": "img/結果頁面/成癮線.png",
+      "成癮線": "img/結果頁面/成癮線.png",
       "藍色極端": "img/結果頁面/成癮線.png",
       "比較": "img/結果頁面/比較線.png",
+      "比較線": "img/結果頁面/比較線.png",
       "洋紅極端": "img/結果頁面/比較線.png",
       "外貌": "img/結果頁面/外貌線.png",
+      "外貌線": "img/結果頁面/外貌線.png",
       "綠色極端": "img/結果頁面/外貌線.png",
       "社交": "img/結果頁面/社交線.png",
+      "社交線": "img/結果頁面/社交線.png",
       "橘色極端": "img/結果頁面/社交線.png",
+      "飛天熱狗": "img/結果頁面/飛天熱狗線.png",
       "飛天熱狗線": "img/結果頁面/飛天熱狗線.png",
       "紅色極端": "img/結果頁面/飛天熱狗線.png",
       "低迷循環線": "img/結果頁面/低迷循環線.png",
@@ -868,11 +1022,14 @@
     const shell = document.querySelector(".shell");
     const step = document.getElementById("step");
     const bar = document.getElementById("bar");
+    const actions = document.getElementById("actions");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
 
     let current = 0;
     const answers = Array(questions.length).fill(null);
+    const transitionMs = 500;
+    let isTransitioning = false;
 
     function updateMeter() {
       const pct = (Math.min(current + 1, questions.length) / questions.length) * 100;
@@ -880,8 +1037,62 @@
       step.textContent = `第 ${Math.min(current + 1, questions.length)} / ${questions.length} 題`;
     }
 
+    function wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    function clearTransitionClasses() {
+      stage.classList.remove(
+        "transition-exit-left",
+        "transition-exit-up",
+        "transition-enter-right",
+        "transition-enter-bottom"
+      );
+    }
+
+    async function transitionStage(renderNext, exitClass, enterClass) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      try {
+        clearTransitionClasses();
+        stage.classList.add(exitClass);
+        await wait(transitionMs);
+        renderNext();
+        clearTransitionClasses();
+        void stage.offsetWidth;
+        stage.classList.add(enterClass);
+        await wait(transitionMs);
+        clearTransitionClasses();
+      } finally {
+        isTransitioning = false;
+      }
+    }
+
+    function restartQuiz() {
+      current = 0;
+      for (let i = 0; i < answers.length; i++) answers[i] = null;
+      renderQuestion();
+    }
+
+    function renderCover() {
+      shell.classList.add("cover-mode");
+      shell.classList.remove("quiz-mode", "result-image-mode");
+      actions.style.display = "none";
+      stage.innerHTML = `
+        <img class="cover-image" id="coverImage" src="${coverImagePath}" alt="焦通工具封面" onerror="this.hidden=true">
+      `;
+
+      stage.querySelector("#coverImage").addEventListener("click", () => {
+        transitionStage(() => renderQuestion(), "transition-exit-left", "transition-enter-right");
+      });
+    }
+
     function renderQuestion() {
       shell.classList.add("quiz-mode");
+      shell.classList.remove("cover-mode", "result-image-mode");
+      actions.style.display = "";
+      prevBtn.style.display = "inline-block";
+      nextBtn.onclick = null;
       updateMeter();
       const q = questions[current];
       const letters = ["A", "B", "C", "D", "E"];
@@ -912,7 +1123,9 @@
       `;
 
       prevBtn.disabled = current === 0;
-      nextBtn.textContent = current === questions.length - 1 ? "看結果" : "";
+      nextBtn.textContent = "";
+      nextBtn.setAttribute("aria-label", current === questions.length - 1 ? "看結果" : "下一站");
+      nextBtn.classList.toggle("result-next", current === questions.length - 1);
       nextBtn.disabled = answers[current] === null;
 
       stage.querySelectorAll(".option").forEach((el) => {
@@ -994,11 +1207,6 @@
       };
     }
 
-    function getActiveLineKey(lineCount) {
-      const activeLines = lines.filter((line) => lineCount[line] > 0);
-      return activeLines.join("+");
-    }
-
     function getResultPageImagePath(endingLineTitle, content) {
       return resultPageImageMap[endingLineTitle] || content.image || "";
     }
@@ -1016,96 +1224,64 @@
 
     function renderResultPage(resultData) {
       const {
-        result,
         endingLine,
-        content,
         resultPageImage,
-        imageErrorHandler,
-        ending,
-        colorDetail,
-        lineDetail
+        imageErrorHandler
       } = resultData;
 
       stage.innerHTML = `
-        <p class="pill">類型：${result.category}</p>
-        <p class="pill">結局線：${endingLine.title}</p>
         <div class="result-visual">
-          ${resultPageImage ? `<img class="result-page-image" src="${resultPageImage}" alt="${endingLine.title} 完整結果頁" onerror="${imageErrorHandler}">` : ""}
+          ${resultPageImage ? `<img class="result-page-image restartable" id="resultRestart" src="${resultPageImage}" alt="${endingLine.title} 完整結果頁" onerror="${imageErrorHandler}">` : ""}
         </div>
-        <h2 class="result-title">${result.title}</h2>
-        <ul class="result-meta">
-          <li><strong>象徵：</strong>${content.symbol}</li>
-          <li><strong>說明：</strong>${content.description}</li>
-          <li><strong>人格標語：</strong>${content.slogans}</li>
-        </ul>
-        <p class="result-desc">結局組合：${endingLine.key || "無"}</p>
-        <p class="result-desc">${ending}</p>
-        <p class="result-desc">顏色計數：${colorDetail}</p>
-        <p class="result-desc">線索計數：${lineDetail}</p>
       `;
+
+      const resultImage = stage.querySelector("#resultRestart");
+      if (resultImage) {
+        resultImage.addEventListener("click", restartQuiz);
+      }
     }
 
     function renderResult() {
       shell.classList.remove("quiz-mode");
+      shell.classList.add("result-image-mode");
       const lineCount = buildLineCount();
       const result = classifyResult(lineCount);
       const endingLine = {
-        title: result.endingLine || "未命名結局線",
-        key: getActiveLineKey(lineCount)
+        title: result.endingLine || "未命名結局線"
       };
       const content = getEndingContent(endingLine.title);
       const resultPageImage = getResultPageImagePath(endingLine.title, content);
       const imageErrorHandler = getImageErrorHandler(resultPageImage, content.image);
-      const ending =
-        rules.endings[result.title] ||
-        (result.category === rules.labels.dominant ? rules.endings["主導"] :
-          result.category === rules.labels.tie ? rules.endings["平手"] :
-            rules.endings["規則外分佈"]);
-      const colorDetail = colorNames.map((color) => {
-        const line = Object.keys(lineToColor).find((key) => lineToColor[key] === color);
-        return `${color} ${lineCount[line]}`;
-      }).join(" ・ ");
-      const lineDetail = lines.map((line) => `${line} ${lineCount[line]}`).join(" ・ ");
       const resultData = {
-        result,
         endingLine,
-        content,
         resultPageImage,
-        imageErrorHandler,
-        ending,
-        colorDetail,
-        lineDetail
+        imageErrorHandler
       };
 
-      step.textContent = "請取票查看結果";
       bar.style.width = "100%";
-      prevBtn.style.display = "none";
-      nextBtn.textContent = "重新測驗";
-      nextBtn.disabled = false;
+      actions.style.display = "none";
 
       stage.innerHTML = `
         <div class="ticket-gate">
-          <p class="pill">結果車票已產生</p>
-          <button class="ticket-button" id="ticketBtn" type="button" aria-label="查看測驗結果">
-            <img class="ticket-image" src="${ticketImagePath}" alt="查看結果車票" onerror="this.hidden=true">
-            <span class="ticket-fallback">查看結果</span>
-          </button>
-          <p class="result-desc">點擊車票查看你的完整結果頁。</p>
+          <img class="ticket-image" id="ticketBtn" src="${ticketImagePath}" alt="查看結果車票" onerror="this.hidden=true">
         </div>
       `;
 
-      stage.querySelector("#ticketBtn").addEventListener("click", () => {
-        step.textContent = "測驗完成";
+      const ticket = stage.querySelector("#ticketBtn");
+      const showResultPage = async () => {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        ticket.classList.add("ticket-exit");
+        await wait(transitionMs);
         renderResultPage(resultData);
-      });
-
-      nextBtn.onclick = () => {
-        current = 0;
-        for (let i = 0; i < answers.length; i++) answers[i] = null;
-        prevBtn.style.display = "inline-block";
-        nextBtn.onclick = null;
-        renderQuestion();
+        clearTransitionClasses();
+        void stage.offsetWidth;
+        stage.classList.add("transition-enter-right");
+        await wait(transitionMs);
+        clearTransitionClasses();
+        isTransitioning = false;
       };
+      ticket.addEventListener("click", showResultPage);
     }
 
     prevBtn.addEventListener("click", () => {
@@ -1121,11 +1297,11 @@
         current += 1;
         renderQuestion();
       } else {
-        renderResult();
+        transitionStage(() => renderResult(), "transition-exit-up", "transition-enter-bottom");
       }
     });
 
-    renderQuestion();
+    renderCover();
   </script>
 </body>
 
