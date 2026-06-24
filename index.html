@@ -211,6 +211,7 @@
     }
 
     .result-visual {
+      position: relative;
       width: min(860px, 100%);
       margin: 4px auto 14px;
     }
@@ -270,7 +271,7 @@
     .ticket-hint {
       margin: 0;
       color: rgba(255, 255, 255, 0.92);
-      font-size: clamp(0.9rem, 1.4vw, 1.12rem);
+      font-size: clamp(1.9rem, 1.4vw, 2.12rem);
       font-weight: 700;
       letter-spacing: 0.06em;
       text-align: center;
@@ -278,8 +279,100 @@
       animation: ticketHintPulse 3.2s ease-in-out infinite;
     }
 
-    .result-page-image.restartable {
+    .adventure-button {
+      position: absolute;
+      left: 40.5%;
+      bottom: 12.5%;
+      z-index: 2;
+      padding: 0;
+      border: none;
+      background: transparent;
       cursor: pointer;
+      filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.28));
+      transform: translateX(-50%);
+      transition: transform 180ms ease, filter 180ms ease;
+    }
+
+    .adventure-button:hover {
+      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.32));
+      transform: translateX(-50%) scale(1.03);
+    }
+
+    .adventure-button:active {
+      transform: translateX(-50%) scale(0.98);
+    }
+
+    .adventure-button-image {
+      display: block;
+      width: min(520px, 33vw);
+      height: auto;
+    }
+
+    .result-download-button {
+      display: block;
+      margin: 16px auto 0;
+      padding: 12px 28px;
+      border: 2px solid #12305a;
+      border-radius: 999px;
+      background: #ffd86b;
+      color: #12305a;
+      font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      box-shadow: 0 6px 0 rgba(18, 48, 90, 0.26), 0 12px 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .result-download-button:hover {
+      transform: scale(1.03);
+    }
+
+    .result-download-button:active {
+      transform: scale(0.98);
+      box-shadow: 0 3px 0 rgba(18, 48, 90, 0.26), 0 8px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .adventure-visual {
+      position: relative;
+      width: min(860px, 100%);
+      margin: 4px auto 14px;
+    }
+
+    .adventure-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      animation: resultImageFadeIn 700ms ease both;
+    }
+
+    .adventure-exit-button {
+      position: absolute;
+      right: 6%;
+      bottom: 4%;
+      z-index: 2;
+      padding: 0;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.28));
+      transition: transform 180ms ease, filter 180ms ease;
+    }
+
+    .adventure-exit-button:hover {
+      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.32));
+      transform: scale(1.03);
+    }
+
+    .adventure-exit-button:active {
+      transform: scale(0.98);
+    }
+
+    .adventure-exit-image {
+      display: block;
+      width: min(180px, 28vw);
+      height: auto;
     }
 
     .cover-mode,
@@ -305,12 +398,47 @@
       margin-top: 0;
     }
 
+    .cover-scene {
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
     .cover-image {
       width: min(1280px, 100%);
       height: auto;
       display: block;
       cursor: pointer;
       animation: coverFloat 4s ease-in-out infinite;
+    }
+
+    .cover-start-btn {
+      position: absolute;
+      left: 50%;
+      bottom: clamp(32px, 7%, 84px);
+      transform: translateX(-50%);
+      z-index: 2;
+      padding: clamp(10px, 1.3vw, 15px) clamp(28px, 4vw, 48px);
+      border: 2px solid #12305a;
+      border-radius: 999px;
+      background: #ffd86b;
+      color: #12305a;
+      font-size: clamp(1rem, 1.7vw, 1.28rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      box-shadow: 0 8px 0 rgba(18, 48, 90, 0.26), 0 14px 24px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+      white-space: nowrap;
+    }
+
+    .cover-start-btn:hover {
+      transform: translateX(-50%) scale(1.03);
+    }
+
+    .cover-start-btn:active {
+      transform: translateX(-50%) scale(0.98);
+      box-shadow: 0 4px 0 rgba(18, 48, 90, 0.26), 0 8px 18px rgba(0, 0, 0, 0.2);
     }
 
     .result-image-mode .actions {
@@ -555,6 +683,11 @@
     }
 
     @media (max-width: 640px) {
+      body {
+        align-items: start;
+        overflow-y: auto;
+      }
+
       .shell {
         border-radius: 18px;
       }
@@ -569,13 +702,20 @@
 
       .quiz-mode {
         width: min(100%, 520px);
-        min-height: 760px;
+        min-height: auto;
         aspect-ratio: auto;
-        background-size: cover;
+        background-size: 100% 100%;
         overflow: visible;
       }
 
+      .quiz-mode .stage {
+        position: relative;
+        inset: auto;
+        min-height: 0;
+      }
+
       .quiz-layout {
+        min-height: 760px;
         padding: 28px 18px;
       }
 
@@ -601,6 +741,61 @@
 
       .quiz-mode .actions {
         flex-direction: row;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .quiz-mode .ghost {
+        width: clamp(132px, 38vw, 172px);
+        min-width: 132px;
+        min-height: 54px;
+        padding: 0;
+      }
+
+      .ticket-card {
+        width: min(100%, calc(100vw - 28px));
+        max-width: 100%;
+      }
+
+      .ticket-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+
+      .ticket-hint {
+        font-size: clamp(1rem, 4.2vw, 1.2rem);
+        line-height: 1.5;
+        padding: 0 12px;
+      }
+
+      .result-visual,
+      .adventure-visual {
+        width: 100%;
+        margin: 0 auto 14px;
+      }
+
+      .result-image-mode {
+        width: min(100%, calc(100vw - 28px));
+      }
+
+      .adventure-button {
+        left: 60%;
+        bottom: 12.5%;
+      }
+
+      .adventure-button-image {
+        width: min(340px, 58vw);
+      }
+
+      .adventure-exit-button {
+        width: auto;
+        right: 5%;
+        bottom: 3%;
+      }
+
+      .adventure-exit-image {
+        width: min(118px, 22vw);
       }
     }
 
@@ -1008,6 +1203,75 @@
       "現實解構線": "img/結果頁面/現實解構線.png",
       "銀河漫遊線": "img/結果頁面/銀河漫遊線.png"
     };
+    const adventureImageMap = {
+      "成癮": "img/大冒險/成癮線.png",
+      "成癮線": "img/大冒險/成癮線.png",
+      "藍色極端": "img/大冒險/成癮線.png",
+      "比較": "img/大冒險/比較線.png",
+      "比較線": "img/大冒險/比較線.png",
+      "洋紅極端": "img/大冒險/比較線.png",
+      "外貌": "img/大冒險/外貌線.png",
+      "外貌線": "img/大冒險/外貌線.png",
+      "綠色極端": "img/大冒險/外貌線.png",
+      "社交": "img/大冒險/社交線.png",
+      "社交線": "img/大冒險/社交線.png",
+      "橘色極端": "img/大冒險/社交線.png",
+      "飛天熱狗": "img/大冒險/飛天熱狗線.png",
+      "飛天熱狗線": "img/大冒險/飛天熱狗線.png",
+      "紅色極端": "img/大冒險/飛天熱狗線.png",
+      "低迷循環線": "img/大冒險/低迷循環線.png",
+      "數據黑洞線": "img/大冒險/數據黑洞線.png",
+      "全方競爭線": "img/大冒險/全方競爭線.png",
+      "流量焦慮線": "img/大冒險/流量焦慮線.png",
+      "焦慮流量線": "img/大冒險/流量焦慮線.png",
+      "視覺競賽線": "img/大冒險/視覺競賽線.png",
+      "完美公開線": "img/大冒險/完美公開線.png",
+      "完美公關線": "img/大冒險/完美公開線.png",
+      "虛擬完美線": "img/大冒險/虛擬完美線.png",
+      "虛擬面具線": "img/大冒險/虛擬面具線.png",
+      "制約快感線": "img/大冒險/制約快感線.png",
+      "社群表演線": "img/大冒險/社群表演線.png",
+      "荒誕劇場線": "img/大冒險/荒誕劇場線.png",
+      "銀河漫遊線": "img/大冒險/銀河漫遊線.png"
+    };
+    const adventureButtonImageMap = {
+      "成癮線": "img/結果頁面/按鈕/成癮線大冒險.png",
+      "比較線": "img/結果頁面/按鈕/比較線大冒險.png",
+      "外貌線": "img/結果頁面/按鈕/外貌線大冒險.png",
+      "社交線": "img/結果頁面/按鈕/社交線大冒險.png",
+      "飛天熱狗線": "img/結果頁面/按鈕/飛天熱狗線大冒險.png"
+    };
+    const endingMainLineMap = {
+      "成癮": "成癮線",
+      "成癮線": "成癮線",
+      "藍色極端": "成癮線",
+      "低迷循環線": "成癮線",
+      "數據黑洞線": "成癮線",
+      "制約快感線": "成癮線",
+      "虛擬面具線": "成癮線",
+      "比較": "比較線",
+      "比較線": "比較線",
+      "洋紅極端": "比較線",
+      "全方競爭線": "比較線",
+      "流量焦慮線": "比較線",
+      "焦慮流量線": "比較線",
+      "視覺競賽線": "比較線",
+      "外貌": "外貌線",
+      "外貌線": "外貌線",
+      "綠色極端": "外貌線",
+      "完美公開線": "外貌線",
+      "完美公關線": "外貌線",
+      "虛擬完美線": "外貌線",
+      "社交": "社交線",
+      "社交線": "社交線",
+      "橘色極端": "社交線",
+      "社群表演線": "社交線",
+      "飛天熱狗": "飛天熱狗線",
+      "飛天熱狗線": "飛天熱狗線",
+      "紅色極端": "飛天熱狗線",
+      "荒誕劇場線": "飛天熱狗線",
+      "銀河漫遊線": "成癮線"
+    };
     const questions = [
       // {
       //   text: "??????",
@@ -1140,17 +1404,29 @@
       renderQuestion();
     }
 
+    function restartToCover() {
+      current = 0;
+      for (let i = 0; i < answers.length; i++) answers[i] = null;
+      bar.style.width = "0%";
+      renderCover();
+    }
+
     function renderCover() {
       shell.classList.add("cover-mode");
       shell.classList.remove("quiz-mode", "result-image-mode");
       actions.style.display = "none";
       stage.innerHTML = `
-        <img class="cover-image" id="coverImage" src="${coverImagePath}" alt="焦通工具封面" onerror="this.hidden=true">
+        <div class="cover-scene">
+          <img class="cover-image" id="coverImage" src="${coverImagePath}" alt="焦通工具封面" onerror="this.hidden=true">
+          <button class="cover-start-btn" id="coverStartBtn" type="button">進入車站</button>
+        </div>
       `;
 
-      stage.querySelector("#coverImage").addEventListener("click", () => {
+      const startQuizFromCover = () => {
         transitionStage(() => renderQuestion(), "transition-exit-left", "transition-enter-right");
-      });
+      };
+      stage.querySelector("#coverImage").addEventListener("click", startQuizFromCover);
+      stage.querySelector("#coverStartBtn").addEventListener("click", startQuizFromCover);
     }
 
     function renderQuestion() {
@@ -1277,6 +1553,39 @@
       return resultPageImageMap[endingLineTitle] || content.image || "";
     }
 
+    function getAdventureImagePath(endingLineTitle) {
+      return adventureImageMap[endingLineTitle] || "";
+    }
+
+    function getMainLineForEnding(endingLineTitle) {
+      return endingMainLineMap[endingLineTitle] || "";
+    }
+
+    function getAdventureButtonImagePath(endingLineTitle) {
+      const mainLine = getMainLineForEnding(endingLineTitle);
+      return adventureButtonImageMap[mainLine] || "";
+    }
+
+    function getAdventureExitImagePath(endingLineTitle) {
+      const mainLine = getMainLineForEnding(endingLineTitle);
+      return mainLine === "飛天熱狗線"
+        ? "img/結果頁面/按鈕/飛天熱狗線退出鍵.png"
+        : "img/結果頁面/按鈕/一般退出鍵.png";
+    }
+
+    function getResultDownloadName(endingLineTitle) {
+      return `焦通工具-${endingLineTitle || "測驗結果"}.png`;
+    }
+
+    function downloadResultImage(imagePath, fileName) {
+      const link = document.createElement("a");
+      link.href = imagePath;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
     function getImageErrorHandler(primaryImage, fallbackImage) {
       if (fallbackImage && fallbackImage !== primaryImage) {
         return `this.onerror=null;this.src='${fallbackImage}'`;
@@ -1288,22 +1597,69 @@
       return endingContent[endingLineTitle] || defaultEndingContent;
     }
 
+    function renderAdventurePage(resultData) {
+      const {
+        endingLine,
+        adventureImage
+      } = resultData;
+      const exitImage = getAdventureExitImagePath(endingLine.title);
+
+      stage.innerHTML = `
+        <div class="adventure-visual">
+          <img class="adventure-image" src="${adventureImage}" alt="${endingLine.title} 大冒險" onerror="this.hidden=true">
+          <button class="adventure-exit-button" id="adventureExitButton" type="button" aria-label="重新開始">
+            <img class="adventure-exit-image" src="${exitImage}" alt="重新開始" onerror="this.closest('button').hidden=true">
+          </button>
+        </div>
+      `;
+
+      const exitButton = stage.querySelector("#adventureExitButton");
+      if (exitButton) {
+        exitButton.addEventListener("click", restartToCover);
+      }
+    }
+
     function renderResultPage(resultData) {
       const {
         endingLine,
         resultPageImage,
-        imageErrorHandler
+        imageErrorHandler,
+        adventureImage,
+        adventureButtonImage
       } = resultData;
+      const adventureButton = adventureImage && adventureButtonImage
+        ? `
+          <button class="adventure-button" id="adventureButton" type="button" aria-label="大冒險">
+            <img class="adventure-button-image" src="${adventureButtonImage}" alt="大冒險" onerror="this.closest('button').hidden=true">
+          </button>
+        `
+        : "";
+      const downloadButton = resultPageImage
+        ? `<button class="result-download-button" id="downloadResultBtn" type="button">下載結果頁</button>`
+        : "";
 
       stage.innerHTML = `
         <div class="result-visual">
-          ${resultPageImage ? `<img class="result-page-image restartable" id="resultRestart" src="${resultPageImage}" alt="${endingLine.title} 完整結果頁" onerror="${imageErrorHandler}">` : ""}
+          ${resultPageImage ? `<img class="result-page-image" src="${resultPageImage}" alt="${endingLine.title} 完整結果頁" onerror="${imageErrorHandler}">` : ""}
+          ${adventureButton}
         </div>
+        ${downloadButton}
       `;
 
-      const resultImage = stage.querySelector("#resultRestart");
-      if (resultImage) {
-        resultImage.addEventListener("click", restartQuiz);
+      const adventureButtonEl = stage.querySelector("#adventureButton");
+      if (adventureButtonEl) {
+        adventureButtonEl.addEventListener("click", (event) => {
+          event.stopPropagation();
+          renderAdventurePage(resultData);
+        });
+      }
+
+      const downloadButtonEl = stage.querySelector("#downloadResultBtn");
+      if (downloadButtonEl) {
+        downloadButtonEl.addEventListener("click", (event) => {
+          event.stopPropagation();
+          downloadResultImage(resultPageImage, getResultDownloadName(endingLine.title));
+        });
       }
     }
 
@@ -1318,10 +1674,21 @@
       const content = getEndingContent(endingLine.title);
       const resultPageImage = getResultPageImagePath(endingLine.title, content);
       const imageErrorHandler = getImageErrorHandler(resultPageImage, content.image);
+      const adventureImage = getAdventureImagePath(endingLine.title);
+      const mainLine = getMainLineForEnding(endingLine.title);
+      const adventureButtonImage = getAdventureButtonImagePath(endingLine.title);
+      console.log("[result debug]", {
+        endingLine: endingLine.title,
+        mainLine,
+        adventureImage,
+        adventureButtonImage
+      });
       const resultData = {
         endingLine,
         resultPageImage,
-        imageErrorHandler
+        imageErrorHandler,
+        adventureImage,
+        adventureButtonImage
       };
 
       bar.style.width = "100%";
