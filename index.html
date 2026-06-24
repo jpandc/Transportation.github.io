@@ -824,6 +824,7 @@
     }
 
     @keyframes coverFloat {
+
       0%,
       100% {
         transform: translateY(0);
@@ -845,6 +846,7 @@
     }
 
     @keyframes ticketHintPulse {
+
       0%,
       100% {
         opacity: 0.72;
@@ -1167,6 +1169,7 @@
     };
     const coverImagePath = "img/UI/封面.png";
     const ticketImagePath = "img/車票外觀/Ticket2.png";
+    const STATS_ENDPOINT = "https://script.google.com/macros/s/AKfycbypXL1tgCJws2-6PeWLA_f6rFHuxqiF129UcOzF-SikgSPSJwPXxVDbUw5frW1A1PwMEw/exec";
     const resultPageImageMap = {
       "成癮": "img/結果頁面/成癮線.png",
       "成癮線": "img/結果頁面/成癮線.png",
@@ -1353,6 +1356,7 @@
     const answers = Array(questions.length).fill(null);
     const transitionMs = 500;
     let isTransitioning = false;
+    let statsSubmitted = false;
 
     function updateMeter() {
       const pct = (Math.min(current + 1, questions.length) / questions.length) * 100;
@@ -1369,6 +1373,25 @@
       const month = String(date.getMonth() + 1).padStart(2, "0");
       const day = String(date.getDate()).padStart(2, "0");
       return `${year}.${month}.${day}`;
+    }
+
+    function submitResultStats(result) {
+      if (statsSubmitted) return;
+      statsSubmitted = true;
+
+      const payload = {
+        endingLine: result.endingLine,
+        type: result.category,
+        createdAt: new Date().toISOString()
+      };
+
+      fetch(STATS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(payload)
+      }).catch((error) => {
+        console.error("[stats submit failed]", error);
+      });
     }
 
     function clearTransitionClasses() {
@@ -1407,6 +1430,7 @@
     function restartToCover() {
       current = 0;
       for (let i = 0; i < answers.length; i++) answers[i] = null;
+      statsSubmitted = false;
       bar.style.width = "0%";
       renderCover();
     }
@@ -1668,6 +1692,7 @@
       shell.classList.add("result-image-mode");
       const lineCount = buildLineCount();
       const result = classifyResult(lineCount);
+      submitResultStats(result);
       const endingLine = {
         title: result.endingLine || "未命名結局線"
       };
